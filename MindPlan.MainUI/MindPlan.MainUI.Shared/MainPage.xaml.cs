@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MindPlan.MainUI.Shared.ViewModel.TodoList;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,16 @@ namespace MindPlan.MainUI
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        // TODO: remove
+        public List<TodoItemViewModel> MyList
+        {
+            get => new List<TodoItemViewModel> { 
+                new TodoItemViewModel{Text="XXX" },
+                 new TodoItemViewModel{Text="YYY" },
+                  new TodoItemViewModel{Text="ZZZ" }
+            };
         }
     }
 }
