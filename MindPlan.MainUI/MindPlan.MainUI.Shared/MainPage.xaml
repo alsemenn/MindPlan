@@ -9,10 +9,6 @@
     mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Load"/>
-            <Button Content="Save"/>
-        </StackPanel>
         <v:TodoListView DataContext="{x:Bind MyList}">
             
         </v:TodoListView>

@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MindPlan.Shared;
+using MindPlan.Json;
+using MindPlan.Shared.TodoList;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -24,22 +27,33 @@ namespace MindPlan.MainUI
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        // TODO: remove.
+        const string saveFileName = "myTodoList.json";
+        private TodoListModel _model;
+
         public MainPage()
         {
             this.InitializeComponent();
+            this.LoadModel();
+            _model = _model ?? new TodoListModel(Guid.NewGuid(), new List<TodoItemModel>());
+            _model.PropertyChanged += _model_PropertyChanged;
+            MyList = new TodoListViewModel(_model);
         }
 
-        // TODO: remove
+        private void _model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.SaveModel(saveFileName);
+        }
+
+        // TODO: remove.
         public TodoListViewModel MyList
         {
-            get => new TodoListViewModel()
-            {
-                Items = new ObservableCollection<TodoItemViewModel>(new List<TodoItemViewModel> {
-                    new TodoItemViewModel{Text="XXX" },
-                    new TodoItemViewModel{Text="YYY" },
-                    new TodoItemViewModel{Text="ZZZ" }
-                })
-            };
+            get;
+            private set;
         }
+
+        //TODO: remove
+        partial void LoadModel();
+        partial void SaveModel(string fileName);
     }
 }

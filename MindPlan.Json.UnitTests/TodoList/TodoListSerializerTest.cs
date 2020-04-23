@@ -11,9 +11,9 @@ namespace MindPlan.Json.UnitTests
         public void SerializeDeserializeTest()
         {
             var testObj = new TodoListSerializer();
-            var list = new Shared.TodoList.TodoList(Guid.NewGuid(), new[] {
-                new TodoListItem(Guid.NewGuid()),
-                new TodoListItem(Guid.NewGuid()) {Text = "My test text"}
+            var list = new Shared.TodoList.TodoListModel(Guid.NewGuid(), new[] {
+                new TodoItemModel(Guid.NewGuid()),
+                new TodoItemModel(Guid.NewGuid()) {Text = "My test text"}
             });
 
             string s = testObj.Serialize(list);

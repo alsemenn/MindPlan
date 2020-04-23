@@ -108,6 +108,14 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\MindPlan.Json\MindPlan.Json.csproj">
+      <Project>{f3674b6c-9ee6-4997-b513-8ff78067a8f6}</Project>
+      <Name>MindPlan.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MindPlan.Shared\MindPlan.Shared.csproj">
+      <Project>{ee2991d5-6f55-4221-b2f9-1913fde2174b}</Project>
+      <Name>MindPlan.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
