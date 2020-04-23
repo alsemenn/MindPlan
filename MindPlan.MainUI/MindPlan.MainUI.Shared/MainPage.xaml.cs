@@ -1,6 +1,7 @@
 ﻿using MindPlan.MainUI.Shared.ViewModel.TodoList;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,12 +30,15 @@ namespace MindPlan.MainUI
         }
 
         // TODO: remove
-        public List<TodoItemViewModel> MyList
+        public TodoListViewModel MyList
         {
-            get => new List<TodoItemViewModel> { 
-                new TodoItemViewModel{Text="XXX" },
-                 new TodoItemViewModel{Text="YYY" },
-                  new TodoItemViewModel{Text="ZZZ" }
+            get => new TodoListViewModel()
+            {
+                Items = new ObservableCollection<TodoItemViewModel>(new List<TodoItemViewModel> {
+                    new TodoItemViewModel{Text="XXX" },
+                    new TodoItemViewModel{Text="YYY" },
+                    new TodoItemViewModel{Text="ZZZ" }
+                })
             };
         }
     }

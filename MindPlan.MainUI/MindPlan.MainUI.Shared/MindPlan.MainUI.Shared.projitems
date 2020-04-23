@@ -22,8 +22,12 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TodoList\TodoItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TodoList\TodoListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\TodoList\TodoItemView.xaml.cs">
       <DependentUpon>TodoItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)View\TodoList\TodoListView.xaml.cs">
+      <DependentUpon>TodoListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +36,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)View\TodoList\TodoItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)View\TodoList\TodoListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

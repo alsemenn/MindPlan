@@ -9,12 +9,12 @@
     mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{x:Bind MyList}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <v:TodoItemView/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Load"/>
+            <Button Content="Save"/>
+        </StackPanel>
+        <v:TodoListView DataContext="{x:Bind MyList}">
+            
+        </v:TodoListView>
     </StackPanel>
 </Page>
