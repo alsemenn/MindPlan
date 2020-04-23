@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MindPlan.MainUI.Wasm", "Min
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MindPlan.Shared", "MindPlan.Shared\MindPlan.Shared.csproj", "{EE2991D5-6F55-4221-B2F9-1913FDE2174B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindPlan.Json", "MindPlan.Json\MindPlan.Json.csproj", "{F3674B6C-9EE6-4997-B513-8FF78067A8F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MindPlan.Json", "MindPlan.Json\MindPlan.Json.csproj", "{F3674B6C-9EE6-4997-B513-8FF78067A8F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindPlan.Json.UnitTests", "MindPlan.Json.UnitTests\MindPlan.Json.UnitTests.csproj", "{40D2C3BD-5463-461D-9F7E-F97D1EC72F70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MindPlan.Json.UnitTests", "MindPlan.Json.UnitTests\MindPlan.Json.UnitTests.csproj", "{40D2C3BD-5463-461D-9F7E-F97D1EC72F70}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
