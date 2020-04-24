@@ -28,7 +28,6 @@ namespace MindPlan.MainUI
     public sealed partial class MainPage : Page
     {
         // TODO: remove.
-        const string saveFileName = "myTodoList.json";
         private TodoListModel _model;
 
         public MainPage()
@@ -36,13 +35,8 @@ namespace MindPlan.MainUI
             this.InitializeComponent();
             this.LoadModel();
             _model = _model ?? new TodoListModel(Guid.NewGuid(), new List<TodoItemModel>());
-            _model.PropertyChanged += _model_PropertyChanged;
+            _model.Items.CollectionChanged += (a, b) => this.SaveModel();
             MyList = new TodoListViewModel(_model);
-        }
-
-        private void _model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            this.SaveModel(saveFileName);
         }
 
         // TODO: remove.
@@ -54,6 +48,6 @@ namespace MindPlan.MainUI
 
         //TODO: remove
         partial void LoadModel();
-        partial void SaveModel(string fileName);
+        partial void SaveModel();
     }
 }
