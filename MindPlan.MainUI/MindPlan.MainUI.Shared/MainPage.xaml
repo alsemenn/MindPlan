@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:MindPlan.MainUI.Shared.View.TodoList"
     mc:Ignorable="d">
+    
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <v:TodoListView DataContext="{x:Bind MyList}">

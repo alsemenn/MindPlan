@@ -1,27 +1,26 @@
 ﻿using MvvmHelpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace MindPlan.Shared.TodoList
 {
     public class TodoListModel: ObservableObject, IEquatable<TodoListModel>
     {
-        private readonly List<TodoItemModel> _items;
         public Guid Id { get; }
 
-        public IEnumerable<TodoItemModel> Items { get => _items; }
+        public ObservableCollection<TodoItemModel> Items { get; }
 
         public TodoListModel(Guid id, List<TodoItemModel> items)
         {
             this.Id = id;
-            _items = items;
+            Items = new ObservableCollection<TodoItemModel>(items);
         }
 
         public void CreateNewItem()
         {
-            _items.Add(new TodoItemModel(Guid.NewGuid()));
-            OnPropertyChanged();   
+            Items.Add(new TodoItemModel(Guid.NewGuid()));
         }
 
         public bool Equals(TodoListModel? other)
