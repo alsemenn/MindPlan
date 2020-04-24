@@ -44,5 +44,9 @@
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.10" />
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.5" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MindPlan.Json\MindPlan.Json.csproj" />
+    <ProjectReference Include="..\..\MindPlan.Shared\MindPlan.Shared.csproj" />
+  </ItemGroup>
   <Import Project="..\MindPlan.MainUI.Shared\MindPlan.MainUI.Shared.projitems" Label="Shared" Condition="Exists('..\MindPlan.MainUI.Shared\MindPlan.MainUI.Shared.projitems')" />
 </Project>

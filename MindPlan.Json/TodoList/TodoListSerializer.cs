@@ -10,12 +10,12 @@ namespace MindPlan.Json.TodoList
 {
     public class TodoListSerializer
     {
-        public Shared.TodoList.TodoList Deserialize(string str)
+        public Shared.TodoList.TodoListModel Deserialize(string str)
         {
             return JsonConvert.DeserializeObject<TodoListJson>(str).Create();
         }
 
-        public string Serialize(Shared.TodoList.TodoList todoList)
+        public string Serialize(TodoListModel todoList)
         {
             return JsonConvert.SerializeObject(new TodoListJson(todoList));
         }
@@ -24,29 +24,29 @@ namespace MindPlan.Json.TodoList
         private class TodoListJson
         {
             [JsonProperty]
-            public List<TodoListItemJson> Items { get; set; }
+            public List<TodoItemJson> Items { get; set; }
 
             [JsonProperty]
             public Guid Id { get; set; }
 
-            public Shared.TodoList.TodoList Create()
+            public TodoListModel Create()
             {
-                return new Shared.TodoList.TodoList(Id, Items.Select(i => i.Create()).ToList());
+                return new TodoListModel(Id, Items.Select(i => i.Create()).ToList());
             }
 
             public TodoListJson()
             {
             }
 
-            public TodoListJson(Shared.TodoList.TodoList todoList)
+            public TodoListJson(TodoListModel todoList)
             {
-                Items = todoList.Items.Select(i => new TodoListItemJson(i)).ToList();
+                Items = todoList.Items.Select(i => new TodoItemJson(i)).ToList();
                 Id = todoList.Id;
             }
         }
 
         [JsonObject(MemberSerialization.OptIn)]
-        private class TodoListItemJson
+        private class TodoItemJson
         {
             [JsonProperty]
             public Guid Id { get; set; }
@@ -54,16 +54,16 @@ namespace MindPlan.Json.TodoList
             [JsonProperty]
             public string Text { get; set; }
 
-            public TodoListItem Create()
+            public TodoItemModel Create()
             {
-                return new TodoListItem(Id) { Text = Text };
+                return new TodoItemModel(Id) { Text = Text };
             }
 
-            public TodoListItemJson()
+            public TodoItemJson()
             {
             }
 
-            public TodoListItemJson(TodoListItem item)
+            public TodoItemJson(TodoItemModel item)
             {
                 Id = item.Id;
                 Text = item.Text;

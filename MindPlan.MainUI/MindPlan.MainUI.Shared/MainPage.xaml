@@ -7,12 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:MindPlan.MainUI.Shared.View.TodoList"
     mc:Ignorable="d">
+    
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Load"/>
-            <Button Content="Save"/>
-        </StackPanel>
         <v:TodoListView DataContext="{x:Bind MyList}">
             
         </v:TodoListView>

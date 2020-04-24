@@ -4,19 +4,19 @@ using System.Text;
 
 namespace MindPlan.Shared.TodoList
 {
-    public class TodoListItem: IEquatable<TodoListItem>
+    public class TodoItemModel: IEquatable<TodoItemModel>
     {
         public Guid Id { get; }
 
         public string Text { get; set; }
 
-        public TodoListItem(Guid id)
+        public TodoItemModel(Guid id)
         {
             Text = string.Empty;
             Id = id;
         }
 
-        public bool Equals(TodoListItem? other)
+        public bool Equals(TodoItemModel? other)
         {
             if (other == null)
             {
@@ -27,7 +27,7 @@ namespace MindPlan.Shared.TodoList
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as TodoListItem);
+            return Equals(obj as TodoItemModel);
         }
 
         public override int GetHashCode()
