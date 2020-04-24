@@ -13,6 +13,7 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
 {
     public class TodoListViewModel: ObservableObject
     {
+        private readonly TodoListModel _model;
         private ObservableCollection<TodoItemViewModel> _items;
         public ObservableCollection<TodoItemViewModel> Items
         {
@@ -28,6 +29,7 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
 
         public TodoListViewModel(TodoListModel model)
         {
+            _model = model;
             UpdateItems(model);
             CreateNewItem = new Command(() => model.CreateNewItem());
             model.Items.CollectionChanged += Items_CollectionChanged;
@@ -35,7 +37,14 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
 
         private void UpdateItems(TodoListModel model)
         {
-            Items = new ObservableCollection<TodoItemViewModel>(model.Items.Select(i => new TodoItemViewModel(i)));
+            Items = new ObservableCollection<TodoItemViewModel>(model.Items.Select(CreateItemViewModel));
+        }
+
+        private TodoItemViewModel CreateItemViewModel(TodoItemModel m)
+        {
+            var ret = new TodoItemViewModel(m);
+            ret.RemoveRequested += () => _model.RemoveItem(m);
+            return ret;
         }
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -44,13 +53,18 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
         }
         private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch(e.Action)
             {
-                e.NewItems.ForEach(i => Items.Add(new TodoItemViewModel((TodoItemModel)i)));
-                return;
+                case NotifyCollectionChangedAction.Add:
+                    e.NewItems.ForEach(i => Items.Add(CreateItemViewModel((TodoItemModel)i)));
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    e.OldItems.ForEach(i => Items.Remove(Items.Single(_ => _.UsesModel((TodoItemModel)i))));
+                    break;
+                default:
+                    this.UpdateItems(this._model);
+                    break;
             }
-
-            UpdateItems((TodoListModel)sender);
         }
     }
 }

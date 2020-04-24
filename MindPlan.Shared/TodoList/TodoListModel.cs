@@ -23,6 +23,11 @@ namespace MindPlan.Shared.TodoList
             Items.Add(new TodoItemModel(Guid.NewGuid()));
         }
 
+        public void RemoveItem(TodoItemModel i)
+        {
+            Items.Remove(i);
+        }
+
         public bool Equals(TodoListModel? other)
         {
             return (other != null)
