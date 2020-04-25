@@ -19,6 +19,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MindPlan.Json", "MindPlan.J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MindPlan.Json.UnitTests", "MindPlan.Json.UnitTests\MindPlan.Json.UnitTests.csproj", "{40D2C3BD-5463-461D-9F7E-F97D1EC72F70}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{91276036-E72A-440B-862D-0CC8ECD9D124}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Design", "Design", "{A3BF931C-6C34-4EDB-94C9-D1228E1C4D92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TodoList", "TodoList", "{885FFDD7-8185-4F8B-9B64-E793DCAD0988}"
+	ProjectSection(SolutionItems) = preProject
+		Overview.md = Overview.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MindPlan.MainUI\MindPlan.MainUI.Shared\MindPlan.MainUI.Shared.projitems*{3465c1a4-a503-4b1c-b5f5-338da4eedeb5}*SharedItemsImports = 5
@@ -413,6 +422,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3BF931C-6C34-4EDB-94C9-D1228E1C4D92} = {91276036-E72A-440B-862D-0CC8ECD9D124}
+		{885FFDD7-8185-4F8B-9B64-E793DCAD0988} = {A3BF931C-6C34-4EDB-94C9-D1228E1C4D92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {488D3EC4-6D40-45A4-ACBB-37DDA9F0C7E8}

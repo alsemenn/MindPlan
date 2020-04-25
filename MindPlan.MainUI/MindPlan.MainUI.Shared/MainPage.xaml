@@ -13,6 +13,6 @@
     </Page.KeyboardAccelerators>
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <v:TodoListView DataContext="{x:Bind MyList}"/>
+        <v:TodoListsPanel DataContext="{x:Bind MyList}"/>
     </StackPanel>
 </Page>

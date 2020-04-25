@@ -29,14 +29,14 @@ namespace MindPlan.MainUI
     public sealed partial class MainPage : Page
     {
         // TODO: remove.
-        private TodoListModel _model;
+        private TodoListNamespaceModel _model;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.LoadModel();
-            _model = _model ?? new TodoListModel(Guid.NewGuid(), new List<TodoItemModel>(), "");
-            MyList = new TodoListViewModel(_model);
+            _model = _model ?? new TodoListNamespaceModel(Guid.NewGuid(), new List<TodoListModel>());
+            MyList = new TodoNamespaceViewModel(_model);
         }
 
         private void SaveAction(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -46,7 +46,7 @@ namespace MindPlan.MainUI
         }
 
         // TODO: remove.
-        public TodoListViewModel MyList
+        public TodoNamespaceViewModel MyList
         {
             get;
             private set;
