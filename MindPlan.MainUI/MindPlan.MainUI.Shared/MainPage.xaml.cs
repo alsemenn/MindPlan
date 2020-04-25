@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using MindPlan.Shared;
 using MindPlan.Json;
 using MindPlan.Shared.TodoList;
+using Windows.System;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -34,9 +35,14 @@ namespace MindPlan.MainUI
         {
             this.InitializeComponent();
             this.LoadModel();
-            _model = _model ?? new TodoListModel(Guid.NewGuid(), new List<TodoItemModel>());
-            _model.Items.CollectionChanged += (a, b) => this.SaveModel();
+            _model = _model ?? new TodoListModel(Guid.NewGuid(), new List<TodoItemModel>(), "");
             MyList = new TodoListViewModel(_model);
+        }
+
+        private void SaveAction(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            this.SaveModel();
         }
 
         // TODO: remove.

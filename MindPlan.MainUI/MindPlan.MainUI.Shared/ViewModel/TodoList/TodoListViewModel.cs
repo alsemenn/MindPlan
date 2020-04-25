@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Uno.Extensions.Specialized;
+
 
 namespace MindPlan.MainUI.Shared.ViewModel.TodoList
 {
@@ -27,17 +29,29 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
             private set;
         }
 
+        public string Name
+        {
+            get => _model.Name;
+            set 
+            {
+                _model.Name = value;
+                OnPropertyChanged();
+            }
+        }
+
         public TodoListViewModel(TodoListModel model)
         {
             _model = model;
-            UpdateItems(model);
+            UpdateItems();
             CreateNewItem = new Command(() => model.CreateNewItem());
             model.Items.CollectionChanged += Items_CollectionChanged;
+            model.PropertyChanged += this.Model_PropertyChanged;
         }
 
-        private void UpdateItems(TodoListModel model)
+        
+        private void UpdateItems()
         {
-            Items = new ObservableCollection<TodoItemViewModel>(model.Items.Select(CreateItemViewModel));
+            Items = new ObservableCollection<TodoItemViewModel>(_model.Items.Select(CreateItemViewModel));
         }
 
         private TodoItemViewModel CreateItemViewModel(TodoItemModel m)
@@ -47,9 +61,19 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
             return ret;
         }
 
-        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateItems((TodoListModel)sender);
+            switch (e.PropertyName)
+            {
+                case "Name":
+                    this.Name = _model.Name;
+                    break;
+                case "Items":
+                    this.UpdateItems();
+                    break;
+                default:
+                    throw new ArgumentException("Unexpected property changed " + e.PropertyName);
+            }
         }
         private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -62,7 +86,7 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
                     e.OldItems.ForEach(i => Items.Remove(Items.Single(_ => _.UsesModel((TodoItemModel)i))));
                     break;
                 default:
-                    this.UpdateItems(this._model);
+                    this.UpdateItems();
                     break;
             }
         }

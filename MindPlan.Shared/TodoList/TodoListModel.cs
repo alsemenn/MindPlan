@@ -8,14 +8,23 @@ namespace MindPlan.Shared.TodoList
 {
     public class TodoListModel: ObservableObject, IEquatable<TodoListModel>
     {
+        private string _name;
+        
         public Guid Id { get; }
+
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
 
         public ObservableCollection<TodoItemModel> Items { get; }
 
-        public TodoListModel(Guid id, List<TodoItemModel> items)
+        public TodoListModel(Guid id, List<TodoItemModel> items, string name)
         {
             this.Id = id;
-            Items = new ObservableCollection<TodoItemModel>(items);
+            this._name = name;
+            this.Items = new ObservableCollection<TodoItemModel>(items);
         }
 
         public void CreateNewItem()

@@ -11,7 +11,10 @@
     d:DesignWidth="400">
     
     <StackPanel>
-        <Button Content="New Item" Command="{Binding Path=CreateNewItem}"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBox Text="{Binding Path=Name, Mode=TwoWay}"/>
+            <Button Content="New Item" Command="{Binding Path=CreateNewItem}"/>
+        </StackPanel>
         <ListView ItemsSource="{Binding Path=Items, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
