@@ -50,7 +50,8 @@ namespace MindPlan.MainUI
             {
                 f = await storageFolder.GetFileAsync(saveFileName);
             }
-            FileIO.WriteTextAsync(f, this.serializer.Serialize(_model)).GetResults();
+            string s = this.serializer.Serialize(_model);
+            FileIO.WriteTextAsync(f, s).GetResults();
         }
 
     }

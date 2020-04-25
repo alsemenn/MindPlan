@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Uno.Extensions.Specialized;
+
 
 namespace MindPlan.MainUI.Shared.ViewModel.TodoList
 {
@@ -24,47 +26,45 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
         public Command CreateNewItem
         {
             get;
-            private set;
+        }
+
+        public string Name
+        {
+            get => _model.Name;
+            set 
+            {
+                _model.Name = value;
+                OnPropertyChanged();
+            }
         }
 
         public TodoListViewModel(TodoListModel model)
         {
             _model = model;
-            UpdateItems(model);
-            CreateNewItem = new Command(() => model.CreateNewItem());
-            model.Items.CollectionChanged += Items_CollectionChanged;
+            UpdateItems();
+            CreateNewItem = new Command(CreateNewItemAction);
         }
 
-        private void UpdateItems(TodoListModel model)
+        private void CreateNewItemAction(object obj)
         {
-            Items = new ObservableCollection<TodoItemViewModel>(model.Items.Select(CreateItemViewModel));
+            var createdItem = this._model.CreateNewItem();
+            this.Items.Add(CreateItemViewModel(createdItem));
+        }
+
+        private void UpdateItems()
+        {
+            Items = new ObservableCollection<TodoItemViewModel>(_model.Items.Select(CreateItemViewModel));
         }
 
         private TodoItemViewModel CreateItemViewModel(TodoItemModel m)
         {
             var ret = new TodoItemViewModel(m);
-            ret.RemoveRequested += () => _model.RemoveItem(m);
-            return ret;
-        }
-
-        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            UpdateItems((TodoListModel)sender);
-        }
-        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch(e.Action)
+            ret.RemoveRequested += () =>
             {
-                case NotifyCollectionChangedAction.Add:
-                    e.NewItems.ForEach(i => Items.Add(CreateItemViewModel((TodoItemModel)i)));
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    e.OldItems.ForEach(i => Items.Remove(Items.Single(_ => _.UsesModel((TodoItemModel)i))));
-                    break;
-                default:
-                    this.UpdateItems(this._model);
-                    break;
-            }
+                this.Items.Remove(ret);
+                _model.RemoveItem(m);
+            };
+            return ret;
         }
     }
 }

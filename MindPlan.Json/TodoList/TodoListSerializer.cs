@@ -10,14 +10,40 @@ namespace MindPlan.Json.TodoList
 {
     public class TodoListSerializer
     {
-        public Shared.TodoList.TodoListModel Deserialize(string str)
+        public TodoListNamespaceModel Deserialize(string str)
         {
-            return JsonConvert.DeserializeObject<TodoListJson>(str).Create();
+            return JsonConvert.DeserializeObject<TodoNamespaceJson>(str).Create();
         }
 
-        public string Serialize(TodoListModel todoList)
+        public string Serialize(TodoListNamespaceModel todoListNamespace)
         {
-            return JsonConvert.SerializeObject(new TodoListJson(todoList));
+            return JsonConvert.SerializeObject(new TodoNamespaceJson(todoListNamespace));
+        }
+
+        [JsonObject(MemberSerialization.OptIn)]
+        private class TodoNamespaceJson
+        {
+            [JsonProperty]
+            public List<TodoListJson> TodoLists { get; set; }
+
+            [JsonProperty]
+            public Guid Id { get; set; }
+
+            public TodoNamespaceJson()
+            {
+                this.TodoLists = new List<TodoListJson>();
+            }
+
+            public TodoNamespaceJson(TodoListNamespaceModel model)
+            {
+                this.TodoLists = model.TodoLists.Select(_ => new TodoListJson(_)).ToList();
+                this.Id = model.Id;
+            }
+
+            public TodoListNamespaceModel Create()
+            {
+                return new TodoListNamespaceModel(this.Id, this.TodoLists.Select(_ => _.Create()).ToList());
+            }
         }
 
         [JsonObject(MemberSerialization.OptIn)]
@@ -29,19 +55,25 @@ namespace MindPlan.Json.TodoList
             [JsonProperty]
             public Guid Id { get; set; }
 
+            [JsonProperty]
+            public string Name { get; set; }
+
             public TodoListModel Create()
             {
-                return new TodoListModel(Id, Items.Select(i => i.Create()).ToList());
+                return new TodoListModel(Id, this.Name, Items.Select(i => i.Create()).ToList());
             }
 
             public TodoListJson()
             {
+                Items = new List<TodoItemJson>();
+                this.Name = "";
             }
 
             public TodoListJson(TodoListModel todoList)
             {
-                Items = todoList.Items.Select(i => new TodoItemJson(i)).ToList();
-                Id = todoList.Id;
+                this.Items = todoList.Items.Select(i => new TodoItemJson(i)).ToList();
+                this.Id = todoList.Id;
+                this.Name = todoList.Name;
             }
         }
 
@@ -56,11 +88,12 @@ namespace MindPlan.Json.TodoList
 
             public TodoItemModel Create()
             {
-                return new TodoItemModel(Id) { Text = Text };
+                return new TodoItemModel(this.Id, this.Text);
             }
 
             public TodoItemJson()
             {
+                this.Text = "";
             }
 
             public TodoItemJson(TodoItemModel item)
