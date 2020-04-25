@@ -10,7 +10,7 @@ namespace MindPlan.Json.TodoList
 {
     public class TodoListSerializer
     {
-        public Shared.TodoList.TodoListModel Deserialize(string str)
+        public TodoListModel Deserialize(string str)
         {
             return JsonConvert.DeserializeObject<TodoListJson>(str).Create();
         }
@@ -29,19 +29,25 @@ namespace MindPlan.Json.TodoList
             [JsonProperty]
             public Guid Id { get; set; }
 
+            [JsonProperty]
+            public string Name { get; set; }
+
             public TodoListModel Create()
             {
-                return new TodoListModel(Id, Items.Select(i => i.Create()).ToList());
+                return new TodoListModel(Id, Items.Select(i => i.Create()).ToList(), this.Name);
             }
 
             public TodoListJson()
             {
+                Items = new List<TodoItemJson>();
+                this.Name = "";
             }
 
             public TodoListJson(TodoListModel todoList)
             {
-                Items = todoList.Items.Select(i => new TodoItemJson(i)).ToList();
-                Id = todoList.Id;
+                this.Items = todoList.Items.Select(i => new TodoItemJson(i)).ToList();
+                this.Id = todoList.Id;
+                this.Name = todoList.Name;
             }
         }
 

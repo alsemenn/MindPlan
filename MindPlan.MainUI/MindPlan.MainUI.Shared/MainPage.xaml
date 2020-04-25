@@ -6,12 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:MindPlan.MainUI.Shared.View.TodoList"
-    mc:Ignorable="d">
-    
+    mc:Ignorable="d"
+    >
+    <Page.KeyboardAccelerators>
+        <KeyboardAccelerator Modifiers="Control" Key="S" Invoked="SaveAction"/>
+    </Page.KeyboardAccelerators>
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <v:TodoListView DataContext="{x:Bind MyList}">
-            
-        </v:TodoListView>
+        <v:TodoListView DataContext="{x:Bind MyList}"/>
     </StackPanel>
 </Page>
