@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MindPlan.Shared.TodoList
 {
-    public class TodoListNamespaceModel: TrackableObjectBase, IEquatable<TodoListNamespaceModel>
+    public class TodoListWorkspaceModel: TrackableObjectBase, IEquatable<TodoListWorkspaceModel>
     {
         private List<TodoListModel> _todoLists;
         private const string TodayListName = "Today";
@@ -13,7 +13,7 @@ namespace MindPlan.Shared.TodoList
         public IEnumerable<TodoListModel> TodoLists { get => this._todoLists; }
         public TodoListModel TodayList { get; }
 
-        public TodoListNamespaceModel(Guid id, IEnumerable<TodoListModel> todoLists)
+        public TodoListWorkspaceModel(Guid id, IEnumerable<TodoListModel> todoLists)
             : base(id)
         {
             this._todoLists = todoLists.ToList();
@@ -37,7 +37,7 @@ namespace MindPlan.Shared.TodoList
             return ret;
         }
 
-        public bool Equals(TodoListNamespaceModel? other)
+        public bool Equals(TodoListWorkspaceModel? other)
         {
             if (object.ReferenceEquals(this, other)) return true;
             if (other == null) return false;
