@@ -1,38 +1,25 @@
-﻿using System;
+﻿using MindPlan.Shared.Tools;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MindPlan.Shared.TodoList
 {
-    public class TodoItemModel: IEquatable<TodoItemModel>
+    public class TodoItemModel: TrackableObjectBase, IEquatable<TodoItemModel>
     {
-        public Guid Id { get; }
-
         public string Text { get; set; }
 
-        public TodoItemModel(Guid id)
+        public TodoItemModel(Guid id, string text)
+            : base(id)
         {
-            Text = string.Empty;
-            Id = id;
+            Text = text;
         }
 
         public bool Equals(TodoItemModel? other)
         {
-            if (other == null)
-            {
-                return false;
-            }
+            if (object.ReferenceEquals(this, other)) return true;
+            if (other == null) return false;
             return (Id == other.Id) && (Text == other.Text);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as TodoItemModel);
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
         }
     }
 }

@@ -26,7 +26,6 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
         public Command CreateNewItem
         {
             get;
-            private set;
         }
 
         public string Name
@@ -43,12 +42,15 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
         {
             _model = model;
             UpdateItems();
-            CreateNewItem = new Command(() => model.CreateNewItem());
-            model.Items.CollectionChanged += Items_CollectionChanged;
-            model.PropertyChanged += this.Model_PropertyChanged;
+            CreateNewItem = new Command(CreateNewItemAction);
         }
 
-        
+        private void CreateNewItemAction(object obj)
+        {
+            var createdItem = this._model.CreateNewItem();
+            this.Items.Add(CreateItemViewModel(createdItem));
+        }
+
         private void UpdateItems()
         {
             Items = new ObservableCollection<TodoItemViewModel>(_model.Items.Select(CreateItemViewModel));
@@ -57,38 +59,12 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
         private TodoItemViewModel CreateItemViewModel(TodoItemModel m)
         {
             var ret = new TodoItemViewModel(m);
-            ret.RemoveRequested += () => _model.RemoveItem(m);
+            ret.RemoveRequested += () =>
+            {
+                this.Items.Remove(ret);
+                _model.RemoveItem(m);
+            };
             return ret;
-        }
-
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case "Name":
-                    this.Name = _model.Name;
-                    break;
-                case "Items":
-                    this.UpdateItems();
-                    break;
-                default:
-                    throw new ArgumentException("Unexpected property changed " + e.PropertyName);
-            }
-        }
-        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch(e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    e.NewItems.ForEach(i => Items.Add(CreateItemViewModel((TodoItemModel)i)));
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    e.OldItems.ForEach(i => Items.Remove(Items.Single(_ => _.UsesModel((TodoItemModel)i))));
-                    break;
-                default:
-                    this.UpdateItems();
-                    break;
-            }
         }
     }
 }

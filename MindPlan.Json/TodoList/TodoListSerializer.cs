@@ -10,14 +10,40 @@ namespace MindPlan.Json.TodoList
 {
     public class TodoListSerializer
     {
-        public TodoListModel Deserialize(string str)
+        public TodoListWorkspaceModel Deserialize(string str)
         {
-            return JsonConvert.DeserializeObject<TodoListJson>(str).Create();
+            return JsonConvert.DeserializeObject<TodoNamespaceJson>(str).Create();
         }
 
-        public string Serialize(TodoListModel todoList)
+        public string Serialize(TodoListWorkspaceModel todoListWorkspace)
         {
-            return JsonConvert.SerializeObject(new TodoListJson(todoList));
+            return JsonConvert.SerializeObject(new TodoNamespaceJson(todoListWorkspace));
+        }
+
+        [JsonObject(MemberSerialization.OptIn)]
+        private class TodoNamespaceJson
+        {
+            [JsonProperty]
+            public List<TodoListJson> TodoLists { get; set; }
+
+            [JsonProperty]
+            public Guid Id { get; set; }
+
+            public TodoNamespaceJson()
+            {
+                this.TodoLists = new List<TodoListJson>();
+            }
+
+            public TodoNamespaceJson(TodoListWorkspaceModel model)
+            {
+                this.TodoLists = model.TodoLists.Select(_ => new TodoListJson(_)).ToList();
+                this.Id = model.Id;
+            }
+
+            public TodoListWorkspaceModel Create()
+            {
+                return new TodoListWorkspaceModel(this.Id, this.TodoLists.Select(_ => _.Create()).ToList());
+            }
         }
 
         [JsonObject(MemberSerialization.OptIn)]
@@ -34,7 +60,7 @@ namespace MindPlan.Json.TodoList
 
             public TodoListModel Create()
             {
-                return new TodoListModel(Id, Items.Select(i => i.Create()).ToList(), this.Name);
+                return new TodoListModel(Id, this.Name, Items.Select(i => i.Create()).ToList());
             }
 
             public TodoListJson()
@@ -62,11 +88,12 @@ namespace MindPlan.Json.TodoList
 
             public TodoItemModel Create()
             {
-                return new TodoItemModel(Id) { Text = Text };
+                return new TodoItemModel(this.Id, this.Text);
             }
 
             public TodoItemJson()
             {
+                this.Text = "";
             }
 
             public TodoItemJson(TodoItemModel item)
