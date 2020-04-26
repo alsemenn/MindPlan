@@ -10,7 +10,7 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
 {
     public class TodoNamespaceViewModel: ObservableObject
     {
-        private readonly TodoListNamespaceModel _model;
+        private readonly TodoListWorkspaceModel _model;
 
         private ObservableCollection<TodoListViewModel> _todoLists;
         public ObservableCollection<TodoListViewModel> TodoLists
@@ -19,7 +19,7 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
             set => SetProperty(ref this._todoLists, value);
         }
 
-        public TodoNamespaceViewModel(TodoListNamespaceModel model) 
+        public TodoNamespaceViewModel(TodoListWorkspaceModel model) 
         {
             this._model = model;
             this._todoLists = new ObservableCollection<TodoListViewModel>(model.TodoLists.Select(_ => new TodoListViewModel(_)));

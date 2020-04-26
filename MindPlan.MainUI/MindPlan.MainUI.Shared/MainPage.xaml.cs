@@ -29,13 +29,13 @@ namespace MindPlan.MainUI
     public sealed partial class MainPage : Page
     {
         // TODO: remove.
-        private TodoListNamespaceModel _model;
+        private TodoListWorkspaceModel _model;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.LoadModel();
-            _model = _model ?? new TodoListNamespaceModel(Guid.NewGuid(), new List<TodoListModel>());
+            _model = _model ?? new TodoListWorkspaceModel(Guid.NewGuid(), new List<TodoListModel>());
             MyList = new TodoNamespaceViewModel(_model);
         }
 

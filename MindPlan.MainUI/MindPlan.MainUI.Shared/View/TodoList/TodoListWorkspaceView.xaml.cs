@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MindPlan.MainUI.Shared.View.TodoList
 {
-    public sealed partial class TodoListsPanel : UserControl
+    public sealed partial class TodoListWorkspaceView : UserControl
     {
-        public TodoListsPanel()
+        public TodoListWorkspaceView()
         {
             this.InitializeComponent();
         }

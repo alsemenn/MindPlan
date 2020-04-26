@@ -10,18 +10,14 @@ namespace MindPlan.Json.TodoList
 {
     public class TodoListSerializer
     {
-<<<<<<< HEAD
-        public TodoListModel Deserialize(string str)
-=======
-        public TodoListNamespaceModel Deserialize(string str)
->>>>>>> Add list name
+        public TodoListWorkspaceModel Deserialize(string str)
         {
             return JsonConvert.DeserializeObject<TodoNamespaceJson>(str).Create();
         }
 
-        public string Serialize(TodoListNamespaceModel todoListNamespace)
+        public string Serialize(TodoListWorkspaceModel todoListWorkspace)
         {
-            return JsonConvert.SerializeObject(new TodoNamespaceJson(todoListNamespace));
+            return JsonConvert.SerializeObject(new TodoNamespaceJson(todoListWorkspace));
         }
 
         [JsonObject(MemberSerialization.OptIn)]
@@ -38,15 +34,15 @@ namespace MindPlan.Json.TodoList
                 this.TodoLists = new List<TodoListJson>();
             }
 
-            public TodoNamespaceJson(TodoListNamespaceModel model)
+            public TodoNamespaceJson(TodoListWorkspaceModel model)
             {
                 this.TodoLists = model.TodoLists.Select(_ => new TodoListJson(_)).ToList();
                 this.Id = model.Id;
             }
 
-            public TodoListNamespaceModel Create()
+            public TodoListWorkspaceModel Create()
             {
-                return new TodoListNamespaceModel(this.Id, this.TodoLists.Select(_ => _.Create()).ToList());
+                return new TodoListWorkspaceModel(this.Id, this.TodoLists.Select(_ => _.Create()).ToList());
             }
         }
 
@@ -64,11 +60,7 @@ namespace MindPlan.Json.TodoList
 
             public TodoListModel Create()
             {
-<<<<<<< HEAD
-                return new TodoListModel(Id, Items.Select(i => i.Create()).ToList(), this.Name);
-=======
                 return new TodoListModel(Id, this.Name, Items.Select(i => i.Create()).ToList());
->>>>>>> Add list name
             }
 
             public TodoListJson()
