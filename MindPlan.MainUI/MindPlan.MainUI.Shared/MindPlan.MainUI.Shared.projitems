@@ -23,7 +23,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TodoList\TodoItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TodoList\TodoListViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TodoList\TodoNamespaceViewModel.cs" />
+    <Compile Include="..\MindPlan.MainUI.Shared\ViewModel\TodoList\TodoWorkspaceViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\TodoList\TodoItemView.xaml.cs">
       <DependentUpon>TodoItemView.xaml</DependentUpon>
     </Compile>

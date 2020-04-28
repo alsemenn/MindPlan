@@ -36,7 +36,7 @@ namespace MindPlan.MainUI
             this.InitializeComponent();
             this.LoadModel();
             _model = _model ?? new TodoListWorkspaceModel(Guid.NewGuid(), new List<TodoListModel>());
-            MyList = new TodoNamespaceViewModel(_model);
+            MyList = new TodoWorkspaceViewModel(_model);
         }
 
         private void SaveAction(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -46,7 +46,7 @@ namespace MindPlan.MainUI
         }
 
         // TODO: remove.
-        public TodoNamespaceViewModel MyList
+        public TodoWorkspaceViewModel MyList
         {
             get;
             private set;

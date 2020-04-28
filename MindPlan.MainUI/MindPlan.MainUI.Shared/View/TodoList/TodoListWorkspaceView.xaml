@@ -10,6 +10,9 @@
     d:DesignWidth="400">
 
     <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="New List" Command="{Binding Path=NewListCommand}"/>
+        </StackPanel>
         <ListView ItemsSource="{Binding Path=TodoLists, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
