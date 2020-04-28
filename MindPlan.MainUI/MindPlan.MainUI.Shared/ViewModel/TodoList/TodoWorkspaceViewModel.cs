@@ -1,5 +1,6 @@
 ﻿using MindPlan.Shared.TodoList;
 using MvvmHelpers;
+using MvvmHelpers.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,10 +20,17 @@ namespace MindPlan.MainUI.Shared.ViewModel.TodoList
             set => SetProperty(ref this._todoLists, value);
         }
 
-        public TodoWorkspaceViewModel(TodoListWorkspaceModel model) 
+        public Command NewListCommand { get; }
+
+        public TodoWorkspaceViewModel(TodoListWorkspaceModel model)
         {
             this._model = model;
             this._todoLists = new ObservableCollection<TodoListViewModel>(model.TodoLists.Select(_ => new TodoListViewModel(_)));
+            this.NewListCommand = new Command(() =>
+            {
+                var l = this._model.CreateNewList();
+                this.TodoLists.Add(new TodoListViewModel(l));
+            });
         }
     }
 }
